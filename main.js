@@ -1,20 +1,37 @@
+/*
+ * @Author: Sule
+ * @Date: 2020-12-10 16:18:14
+ * @LastEditors: Sule
+ * @LastEditTime: 2020-12-10 17:39:19
+ * @Description: 
+ */
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const { app, BrowserWindow, Menu, globalShortcut } = require('electron')
 const path = require('path')
 
-function createWindow () {
+function createWindow() {
+  Menu.setApplicationMenu(null)
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1520,
+    height: 1810,
+    minWidth: 1300,
+    minHeight: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     }
   })
-
+  globalShortcut.register('Control+L', () => {  // creates a global shortcut
+    mainWindow.webContents.openDevTools();
+  })
+  globalShortcut.register('Control+R', () => {  // creates a global shortcut
+    mainWindow.reload();
+  })
+  mainWindow.on('resize', () => {
+    mainWindow.reload();
+  })
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
-
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
 }
@@ -24,7 +41,7 @@ function createWindow () {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   createWindow()
-  
+
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.

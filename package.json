@@ -4,7 +4,8 @@
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "packager": "electron-packager . Number --out out --arch=x64 --overwrite --ignore=node_modules"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -17,6 +18,8 @@
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^11.0.1"
-  }
+    "electron": "^11.0.4",
+    "electron-packager": "^15.2.0"
+  },
+  "pack":"electron-packager . testexe --platform=win32 --arch=x64  --out=./out --asar --app-version=0.0.1" 
 }
